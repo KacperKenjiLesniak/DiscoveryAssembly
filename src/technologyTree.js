@@ -33,7 +33,7 @@ function TechnologyTree(){
 
 var tree = new TechnologyTree();
 tree.createMainNode();
-for (var i = 0; i < 500; i++) {
+for (var i = 0; i < NODECOUNT; i++) {
     tree.addNode();
 }
 // for (var i =0; i<tree.existingNodes.length; ++i){
