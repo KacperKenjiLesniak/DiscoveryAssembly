@@ -1,0 +1,19 @@
+{
+  "name": "discoveryassembly",
+  "version": "1.0.0",
+  "description": "Collective discovery simulator in JS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "testIt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KacperKenjiLesniak/DiscoveryAssembly.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KacperKenjiLesniak/DiscoveryAssembly/issues"
+  },
+  "homepage": "https://github.com/KacperKenjiLesniak/DiscoveryAssembly#readme"
+}
