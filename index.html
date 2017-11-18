@@ -3,9 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="node_modules/vis/dist/vis.js"></script>
     <script type="text/javascript" src="technologyTree.js"></script>
+    <script type="text/javascript" src="displayTechnologyTree.js"></script>
+    <script type="text/javascript">
+    function init() {
+        var visGraph = new GraphToVis(tree);
+        var options = {};
+        var nodes = [
+ 
+       {
+ 
+         id:"a",
+ 
+         label:"A"
+ 
+       },
+ 
+       {
+ 
+         id:"b",
+ 
+         label:"B"
+ 
+       }
+ 
+];
+ 
+var edges = [
+ 
+       {
+ 
+         from:"a",
+ 
+         to:"b"
+ 
+       }
+ 
+];
+        var data = {
+            nodes: visGraph.nodes,
+            edges: visGraph.edges
+        }
+        var container = document.querySelector('.network');
+        graph = new vis.Network(container, data, options);}
+    </script>
+    <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-
+<body onload="init()">
+<div class="network" style="width: 100%; height: 100vh;">Siusiak</div>
 </body>
 </html>
