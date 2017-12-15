@@ -31,11 +31,6 @@ function TechnologyTree(){
     }
 }
 
-var tree = new TechnologyTree();
-tree.createMainNode();
-for (var i = 0; i < NODECOUNT; i++) {
-    tree.addNode();
-}
 // for (var i =0; i<tree.existingNodes.length; ++i){
 //     document.write("Node: ");
 //     document.write(tree.existingNodes[i].nodeID);

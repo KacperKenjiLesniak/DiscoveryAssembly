@@ -12,5 +12,5 @@ function GraphToVis(tree) {
 }
 
 function nodeToVisNode(node) {
-    return {id: String(node.nodeID), label: String(node.knowledgeFields), color:{background: "pink"}};
+    return {id: String(node.nodeID), label: String(node.nodeID) + "\n" + String(node.knowledgeFields), color:{background: "pink"}};
 }
