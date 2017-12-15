@@ -29,28 +29,39 @@ function Team(teamID){
         this.knowledge.push(0.0);
     }
 
+    this.completionStatus = function(){
+        for(var i=0; i<this.currentDiscovery.knowledgeFields.length; i++) {
+            for(var j=0; j<this.members.length; j++){
+                if(this.knowledge[i] + this.members[j].knowledge[i] < this.currentDiscovery.knowledgeFields[i]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     this.doWork = function(){
         var choiceList = [];
         var meetingList =[];
-        for(var i=0; i<this.members.length; i++){
-            if (Math.random()<this.meetingProbability) {
+        for (var i = 0; i < this.members.length; i++) {
+            if (Math.random() < this.meetingProbability) {
                 choiceList.push(1);
                 meetingList.push(i);
             }
             else choiceList.push(0);
         }
-        if(meetingList.length>0 && this.members.length>1){
-            var speaker = this.members[meetingList[Math.floor(Math.random()*meetingList.length)]];
-            if(speaker.knowledge[0]<speaker.skills[0]*speaker.knowledgePassingSpeed){
-                for (var j=0; j<speaker.knowledge.length; j++){
+        if (meetingList.length > 0 && this.members.length > 1) {
+            var speaker = this.members[meetingList[Math.floor(Math.random() * meetingList.length)]];
+            if (speaker.knowledge[0] < speaker.skills[0] * speaker.knowledgePassingSpeed) {
+                for (var j = 0; j < speaker.knowledge.length; j++) {
                     this.knowledge[j] += speaker.knowledge[j];
                     speaker.knowledge[j] = 0;
                 }
             }
-            else{
-                for (var j=0; j<speaker.knowledge.length; j++){
-                    this.knowledge[j] += speaker.skills[j]*speaker.knowledgePassingSpeed;
-                    speaker.knowledge[j] -= speaker.skills[j]*speaker.knowledgePassingSpeed;
+            else {
+                for (var j = 0; j < speaker.knowledge.length; j++) {
+                    this.knowledge[j] += speaker.skills[j] * speaker.knowledgePassingSpeed;
+                    speaker.knowledge[j] -= speaker.skills[j] * speaker.knowledgePassingSpeed;
                 }
             }
         }
@@ -58,6 +69,16 @@ function Team(teamID){
             for (var i = 0; i < this.members.length; i++) {
                 this.members[i].doWork();
             }
+        }
+        if(!this.completionStatus()) {
+            this.discoveries.push(this.currentDiscovery);
+            for (var i = 0; i< this.knowledge.length; i++){
+                this.knowledge[i] = 0;
+                for (var j = 0; j< this.knowledge.length; j++){
+                    this.members[j].knowledge[i] = 0;
+                }
+            }
+            this.currentDiscovery = null;
         }
     }
 }
