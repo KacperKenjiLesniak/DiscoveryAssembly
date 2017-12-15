@@ -12,6 +12,7 @@ displayTeams(teams);
 var dayNumber = 0;
 
 function day(){
+    console.clear();
     console.log("New day: " + String(dayNumber++));
     for (var i = 0; i<teams.length; i++) {
         if (teams[i].currentDiscovery === null) {
