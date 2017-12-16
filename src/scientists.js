@@ -183,7 +183,6 @@ function nextDiscoveryWith(team, tree) {
                         ingredientsDiscovered++;
                     }
                 }
-                console.log(ingredientsDiscovered);
                 if (ingredientsDiscovered / tree.existingNodes[i].ingredients.length >= INGREDIENTSTOPROCEED) {
                     possibleNextDiscoveries.push(tree.existingNodes[i]);
                 }
