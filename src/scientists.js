@@ -49,7 +49,10 @@ function Team(teamID) {
         var choiceList = [];
         var meetingList = [];
         for (var i = 0; i < this.members.length; i++) {
-            if (Math.random() < PAPERPROBABILITY && this.publicationInProgress) {
+            if (this.currentDiscovery === null) {
+                choiceList.push(2);
+            }
+            else if (Math.random() < PAPERPROBABILITY && this.publicationInProgress) {
                 choiceList.push(2);
             }
             else if (Math.random() < this.meetingProbability) {
@@ -83,8 +86,12 @@ function Team(teamID) {
                 }
             }
         }
-        if (this.completionStatus()) {
+        if (this.currentDiscovery != null && this.completionStatus()) {
             this.discoveries.add(this.currentDiscovery);
+            console.log(nodeSet.get(this.currentDiscovery.nodeID).color.background);
+            if(nodeSet.get(this.currentDiscovery.nodeID).color.background === 'pink') {
+                nodeSet.update([{id: this.currentDiscovery.nodeID, color:{background: '#ffcc00'}}]);
+            }
             for (var i = 0; i < this.knowledge.length; i++) {
                 this.knowledge[i] = 0;
                 for (var j = 0; j < this.members.length; j++) {
@@ -170,17 +177,21 @@ function nextDiscoveryWith(team, tree) {
             }
             else {
                 var ingredientsDiscovered = 0;
+                console.log(ingredientsDiscovered);
                 for (var j = 0; j < tree.existingNodes[i].ingredients.length; j++) {
                     if (team.discoveries.has(tree.existingNodes[i].ingredients[j])) {
                         ingredientsDiscovered++;
                     }
                 }
-                if (ingredientsDiscovered / tree.existingNodes[i].ingredients.length > INGREDIENTSTOPROCEED) {
+                console.log(ingredientsDiscovered);
+                if (ingredientsDiscovered / tree.existingNodes[i].ingredients.length >= INGREDIENTSTOPROCEED) {
                     possibleNextDiscoveries.push(tree.existingNodes[i]);
                 }
             }
         }
     }
+    if(possibleNextDiscoveries.length === 0)
+        return null;
     team.currentDiscovery = possibleNextDiscoveries[Math.floor(Math.random() * possibleNextDiscoveries.length)];
     return team.currentDiscovery.nodeID;
 }

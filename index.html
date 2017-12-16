@@ -9,18 +9,22 @@
     <script type="text/javascript" src="src/technologyTree.js"></script>
     <script type="text/javascript" src="src/displayTechnologyTree.js"></script>
     <script type="text/javascript" src="src/scientists.js"></script>
-    <script type="text/javascript" src="src/mainLoop.js"></script>
     <script type="text/javascript">
-    function init() {
-        var visGraph = new GraphToVis(tree);
-        var options = {};
-        var data = {
-            nodes: visGraph.nodes,
-            edges: visGraph.edges
-        }
-        var container = document.querySelector('.network');
-        graph = new vis.Network(container, data, options);}
+        var nodeSet, edgeSet;
+        function init() {
+            var visGraph = new GraphToVis(tree);
+            nodeSet = new vis.DataSet(visGraph.nodes);
+            edgeSet = new vis.DataSet(visGraph.edges);
+            var data = {
+                nodes: nodeSet,
+                edges: edgeSet
+            }
+            var options = {};
+            var container = document.querySelector('.network');
+                graph = new vis.Network(container, data, options);}
     </script>
+    <script type="text/javascript" src="src/mainLoop.js"></script>
+
     <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="init()">
