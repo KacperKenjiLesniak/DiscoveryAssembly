@@ -19,16 +19,25 @@ function displayTeams(teams) {
             "            <div class=\"TeamPublications\"></div>\n" +
             "        </div>\n" +
             "    </div>\n" +
-            "    <div class=\"Members\">\n" +
+            "    <div class=\"Members\"> \n" +
             "        <div class=\"MembersTitle\"></div>\n" +
-            "        <div class=\"Button\"><i class=\"fa fa-caret-down\" aria-hidden=\"true\"></i></div>\n" +
+            "        <div class=\"Button\"><i class=\"fa fa-caret-down\" aria-hidden=\"true\" ></i></div>\n" +
             "    </div>\n" +
-            "    <div class=\"MemberList\"></div>";
+            "    <div class=\"MemberList\"></div>" +
+            "    <br>";
         div.id = i;
         console.log(div.innerHTML);
         document.getElementById("teams").appendChild(div);
         displayTeam(teams[i], i);
     }
+}
+
+function toggle_visibility(id) {
+    var e = document.getElementById(id).getElementsByClassName("MemberList")[0];
+    if(e.style.display === 'block')
+        e.style.display = 'none';
+    else
+        e.style.display = 'block';
 }
 
 function displayTeam(team, id) {
@@ -62,6 +71,7 @@ function displayTeam(team, id) {
     for (i = 0; i<team.writtenPapers.length; i++){
         teamContainer.getElementsByClassName("TeamPublications")[0].innerHTML += team.writtenPapers[i].nodeID + ", ";
     }
+    teamContainer.getElementsByClassName("MembersTitle")[0].innerHTML = "Members - " + team.members.length;
     for (i = 0; i<team.members.length; i++){
         var memberDiv = document.createElement("div");
         memberDiv.innerHTML = "<div class=\"MemberID\">Member ID: " + i + "</div>\n" +
@@ -81,6 +91,10 @@ function displayTeam(team, id) {
         for(var j = 0; j<team.members[i].knowledge.length; j++){
             memberDiv.getElementsByClassName("MemberKnowledge")[0].innerHTML += Math.floor(team.members[i].knowledge[j]*100)/100 + " / ";
         }
+        var h1 = teamContainer.getElementsByClassName("fa fa-caret-down")[0];
+        var att = document.createAttribute("onClick");
+        att.value = "toggle_visibility(" + id +")";
+        h1.setAttributeNode(att);
         teamContainer.getElementsByClassName("MemberList")[0].appendChild(memberDiv);
     }
 

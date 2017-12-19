@@ -2,7 +2,6 @@ var teams = generateTeams();
 var tree = new TechnologyTree();
 var awaitingPapers = [];
 tree.createMainNode();
-
 for (var i = 0; i < NODECOUNT; i++) {
     tree.addNode();
 }
@@ -38,5 +37,9 @@ function day(){
     console.log(publicationsFinished);
     displayKnowledge(teams);
     displayTeams(teams);
+    while(pause===1)
+    {
+
+    }
     setTimeout(day, DAYLENGTH);
 }

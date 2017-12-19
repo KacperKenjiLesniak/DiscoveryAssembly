@@ -1,8 +1,7 @@
 .Container {
-    background-color: greenyellow;
     font-family: Arial;
     color: white;
-    width: 100vw;
+    width: 98vw;
 }
 
 .TeamID {
@@ -81,6 +80,7 @@
 
 .MemberList {
     background-color: #789D34;
+    display: none;
 }
 
 .MemberID {
