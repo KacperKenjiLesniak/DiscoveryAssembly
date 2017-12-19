@@ -10,7 +10,11 @@ function displayTeams(teams){
             "                <div class=\"CurrentDiscovery\"></div>\n" +
             "                <div class=\"PublicationInProgress\"></div>\n" +
             "            </div>\n" +
-            "            <div class=\"TeamKnowledge\"></div>\n" +
+            "            <div class=\"SubColumn\">\n" +
+            "                <div class=\"TeamKnowledge\"></div>\n" +
+            "                <div class=\"MeetingCount\" ></div>\n" +
+            "                <div class=\"MeetingProbability\" ></div>\n" +
+            "            </div>\n" +
             "        </div>\n" +
             "        <div class=\"SecondColumn\">\n" +
             "            <div class=\"KnownDiscoveries\"></div>\n" +
@@ -43,6 +47,11 @@ function displayTeam(team, id){
     teamContainer.getElementsByClassName("TeamKnowledge")[0].innerHTML = "Team knowledge: ";
     for (i=0; i<team.knowledge.length; i++)
         teamContainer.getElementsByClassName("TeamKnowledge")[0].innerHTML += Math.floor(team.knowledge[i]*10)/10 + " / ";
+
+    teamContainer.getElementsByClassName("MeetingCount")[0].innerHTML = "Meeting Count: " + team.meetingCount;
+
+    teamContainer.getElementsByClassName("MeetingProbability")[0].innerHTML = "Meeting Probability: " + team.meetingProbability;
+
 
     teamContainer.getElementsByClassName("TeamDiscoveries")[0].innerHTML = "Team discoveries: ";
     for (i = 0; i<team.teamDiscoveries.length; i++){
@@ -118,6 +127,8 @@ function updateTeam(team, id) {
     teamContainer.getElementsByClassName("TeamKnowledge")[0].innerHTML = "Team knowledge: ";
     for (i=0; i<team.knowledge.length; i++)
         teamContainer.getElementsByClassName("TeamKnowledge")[0].innerHTML += Math.floor(team.knowledge[i]*10)/10 + " / ";
+
+    teamContainer.getElementsByClassName("MeetingCount")[0].innerHTML = "Meeting Count: " + team.meetingCount;
 
     teamContainer.getElementsByClassName("TeamDiscoveries")[0].innerHTML = "Team discoveries: ";
     for (i = 0; i<team.teamDiscoveries.length; i++){

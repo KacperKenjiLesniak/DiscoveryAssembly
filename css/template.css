@@ -34,10 +34,21 @@
     height: 50%;
 }
 
-.TeamKnowledge {
+.SubColumn {
     background-color: #789D34;
-    height: 100%;
     width: 50%;
+}
+
+.TeamKnowledge {
+    width: 100%;
+}
+
+.MeetingCount {
+    width: 100%;
+}
+
+.MeetingProbability {
+    width: 100%;
 }
 
 .KnownDiscoveries {
