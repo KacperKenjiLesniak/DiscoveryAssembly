@@ -36,6 +36,6 @@ function day(){
     console.log(publicationsInProgress);
     console.log(publicationsFinished);
     displayKnowledge(teams);
-    displayTeams(teams);
+    updateTeams(teams);
     setTimeout(day, DAYLENGTH);
 }
