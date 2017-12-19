@@ -1,0 +1,123 @@
+.Container {
+    background-color: greenyellow;
+    font-family: Arial;
+    color: white;
+    width: 100vw;
+}
+
+.TeamID {
+    background-color: #297A4A;
+    height: 3vh;
+    font-size: 2.5vh;
+}
+
+.TeamIDDetails {
+    display: flex;
+    flex-direction: row;
+}
+
+.FirstColumn {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+}
+
+.Labels {
+    width: 50%;
+    background-color: #789D34;
+}
+
+.CurrentDiscovery {
+    height: 50%;
+}
+
+.PublicationInProgress {
+    height: 50%;
+}
+
+.TeamKnowledge {
+    background-color: #789D34;
+    height: 100%;
+    width: 50%;
+}
+
+.KnownDiscoveries {
+    background-color: #789D34;
+    width: 100%;
+}
+
+.TeamDiscoveries {
+    background-color: #789D34;
+    width: 100%;
+}
+
+.SecondColumn {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.TeamPublications {
+    background-color: #789D34;
+    width: 100%;
+}
+
+.Members {
+    background-color: #297A4A;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.MembersTitle {
+    height: 3vh;
+    font-size: 2.5vh;
+}
+
+.Button {
+    margin-right: 1.5vw;
+}
+
+.MemberList {
+    background-color: #789D34;
+}
+
+.MemberID {
+
+}
+
+.MemberDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.Skills {
+    width:18%;
+}
+
+.SkillsNames {
+
+}
+
+.SkillsValues {
+    background-color: yellow;
+}
+
+.Statistics {
+    width:18.5%;
+}
+
+.KnowledgePassingSpeed {
+    background-color: red;
+}
+
+.PaperWritingSpeed {
+    background-color: purple;
+}
+
+.MemberKnowledge {
+    background-color: lightpink;
+    width:63.5%;
+}
