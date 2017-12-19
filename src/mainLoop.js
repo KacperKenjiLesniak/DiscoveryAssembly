@@ -37,9 +37,5 @@ function day(){
     console.log(publicationsFinished);
     displayKnowledge(teams);
     displayTeams(teams);
-    while(pause===1)
-    {
-
-    }
     setTimeout(day, DAYLENGTH);
 }
