@@ -9,6 +9,7 @@
     <script type="text/javascript" src="src/technologyTree.js"></script>
     <script type="text/javascript" src="src/displayTechnologyTree.js"></script>
     <script type="text/javascript" src="src/scientists.js"></script>
+    <script type="text/javascript" src="src/displayTeams.js"></script>
     <script type="text/javascript">
         var nodeSet, edgeSet;
         function init() {
@@ -21,14 +22,17 @@
             }
             var options = {};
             var container = document.querySelector('.network');
-                graph = new vis.Network(container, data, options);}
+                graph = new vis.Network(container, data, options);
+            day();
+        }
+
     </script>
     <script type="text/javascript" src="src/mainLoop.js"></script>
 
     <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="init()">
+<div id="teams"></div>
 <div class="network" style="width: 100%; height: 100vh;">Network</div>
-<div class="teams" style="width: 100%; height: 100vh;">Teams</div>
 </body>
 </html>

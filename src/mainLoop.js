@@ -7,8 +7,6 @@ for (var i = 0; i < NODECOUNT; i++) {
     tree.addNode();
 }
 
-displayTeams(teams);
-
 var dayNumber = 0;
 
 function day(){
@@ -19,7 +17,7 @@ function day(){
         awaitingPapers[i].delay--;
         if (awaitingPapers[i].delay === 0){
             nodeSet.update([{id: awaitingPapers[i].discovery.nodeID, color:{background: '#85e085'}}]);
-            if(awaitingPapers[i].discovery.nodeID == 0) {
+            if(awaitingPapers[i].discovery.nodeID === 0) {
                 console.log("EUREKA!");
                 return;
             }
@@ -37,9 +35,8 @@ function day(){
         teams[i].doWork();
     }
     console.log(publicationsInProgress);
-    console.log(publicatoinsFinished);
+    console.log(publicationsFinished);
     displayKnowledge(teams);
+    displayTeams(teams);
     setTimeout(day, DAYLENGTH);
 }
-
-day();
