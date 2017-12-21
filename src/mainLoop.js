@@ -13,13 +13,17 @@ function day(){
     console.log("Day: " + String(dayNumber++));
     console.log("Awaiting papers: " + String(awaitingPapers));
     for (var i = 0; i<awaitingPapers.length; i++){
+        if(awaitingPapers[i].discovery.nodeID === 0) {
+            console.log("EUREKA!");
+            return;
+        }
         awaitingPapers[i].delay--;
         if (awaitingPapers[i].delay === 0){
             nodeSet.update([{id: awaitingPapers[i].discovery.nodeID, color:{background: '#85e085'}}]);
-            if(awaitingPapers[i].discovery.nodeID === 0) {
-                console.log("EUREKA!");
-                return;
-            }
+            // if(awaitingPapers[i].discovery.nodeID === 0) {
+            //     console.log("EUREKA!");
+            //     return;
+            // }
             for (var j = 0; j<teams.length; j++){
                 teams[j].discoveries.add(awaitingPapers[i].discovery);
             }

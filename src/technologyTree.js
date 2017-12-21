@@ -16,14 +16,20 @@ function TechnologyTree(){
     this.existingNodes = [];
     this.createMainNode = function () {
         node = new TechnologyNode();
-        node.createTechnologyNode(
-            [Math.round(Math.random()*10), Math.round(Math.random()*10), Math.round(Math.random()*10)]);
+        var fields = [];
+        for (var i = 0; i< KNOWLEDGEFIELDSCOUNT; i++){
+            fields.push(Math.round(Math.random()*10));
+        }
+        node.createTechnologyNode(fields);
         this.existingNodes.push(node);
     };
     this.addNode = function(){
         node = new TechnologyNode();
-        node.createTechnologyNode(
-            [Math.round(Math.random()*10), Math.round(Math.random()*10), Math.round(Math.random()*10)]);
+        var fields = [];
+        for (var i = 0; i< KNOWLEDGEFIELDSCOUNT; i++){
+            fields.push(Math.round(Math.random()*10));
+        }
+        node.createTechnologyNode(fields);
         productNodeIndex = Math.floor(Math.random()*this.existingNodes.length);
         node.products = [this.existingNodes[productNodeIndex]];
         this.existingNodes[productNodeIndex].ingredients.push(node);

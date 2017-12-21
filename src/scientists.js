@@ -38,14 +38,18 @@ function Team(teamID) {
     }
 
     this.completionStatus = function () {
-        for (var i = 0; i < this.currentDiscovery.knowledgeFields.length; i++) {
-            for (var j = 0; j < this.members.length; j++) {
+        for (var j = 0; j < this.members.length; j++) {
+            for (var i = 0; i < this.currentDiscovery.knowledgeFields.length; i++) {
+                var discoveryRequirementsMet = true;
                 if (this.knowledge[i] + this.members[j].knowledge[i] < this.currentDiscovery.knowledgeFields[i]) {
-                    return false;
+                    discoveryRequirementsMet = false;
                 }
             }
+            if (discoveryRequirementsMet === true) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
     this.doWork = function () {
@@ -145,19 +149,14 @@ function generateScientist() {
 
 
 function displayKnowledge(teams) {
-    for (var i = 0; i < teams.length; i++) {
-        console.log("Team ID: " + teams[i].teamID);
-        console.log("Team knowledge: " + teams[i].knowledge);
-        if(teams[i].currentDiscovery != null)
-            console.log("Current discovery: " + teams[i].currentDiscovery.nodeID);
-        console.log("Team discoveries:");
-        teams[i].discoveries.forEach(function(value) { console.log(value.nodeID) })
-        // console.log("Mombers skills and knowledge: ");
-        // for (var j = 0; j < teams[i].members.length; j++) {
-        //     console.log(teams[i].members[j].skills + "; "
-        //         + teams[i].members[j].knowledge);
-        // }
-    }
+    // for (var i = 0; i < teams.length; i++) {
+    //     console.log("Team ID: " + teams[i].teamID);
+    //     console.log("Team knowledge: " + teams[i].knowledge);
+    //     if(teams[i].currentDiscovery != null)
+    //         console.log("Current discovery: " + teams[i].currentDiscovery.nodeID);
+    //     console.log("Team discoveries:");
+    //     teams[i].discoveries.forEach(function(value) { console.log(value.nodeID) })
+    // }
 }
 
 function nextDiscoveryWith(team, tree) {
