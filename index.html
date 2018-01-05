@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DiscoveryAssembly</title>
+    <script type="text/javascript" src="src/readWriteFiles.js"></script>
     <script type="text/javascript" src="src/params.js"></script>
     <script type="text/javascript" src="src/Queue.js"></script>
     <script type="text/javascript" src="node_modules/vis/dist/vis.js"></script>
@@ -11,27 +12,33 @@
     <script type="text/javascript" src="src/scientists.js"></script>
     <script type="text/javascript" src="src/displayTeams.js"></script>
     <script type="text/javascript">
-        var nodeSet, edgeSet;
+        var nodeSet, edgeSet,teams,tree;
         function init() {
-            treeFile = document.getElementById('tree-file').value;
-            teamsFile = document.getElementById('teams-file').value;
-            console.log(JSON.stringify(treeFile));
-            var teams, tree;
-            if (JSON.stringify(teamsFile) === ""){
+            treeFile = document.getElementById('tree-file');
+            teamsFile = document.getElementById('teams-file');
+            //console.log(bufferTree);
+            //console.log(bufferTeams);
+            if (teamsFile.value === ""){
                 teams = generateTeams();
+                console.log(teams);
+                download(JSON.stringify(teams),"teams.txt");
             }
             else {
-                teams = JSON.parse(readSingleFile(treeFile));
+                teams = JSON.parse(bufferTeams);
+                console.log(teams);//JSON.parse(readSingleFile(treeFile.files[0]));
             }
-            if (JSON.stringify(treeFile) === "") {
+            if (treeFile.value === "") {
                 tree = new TechnologyTree();
                 tree.createMainNode();
                 for (var i = 0; i < NODECOUNT; i++) {
                     tree.addNode();
                 }
+                console.log(tree);
+                download(JSON.stringify(tree),"tree.txt");
             }
             else {
-                tree = JSON.parse(readSingleFile(teamsFile));
+                tree = JSON.parse(bufferTree);//JSON.parse(readSingleFile(teamsFile.files[0]));
+                console.log(tree);
             }
             var visGraph = new GraphToVis(tree);
             nodeSet = new vis.DataSet(visGraph.nodes);
@@ -55,11 +62,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-Tree File: <input type="file" id="tree-file" onchange='readSingleFile(e)'/><br>
-Teams File: <input type="file" id="teams-file" onchange='readSingleFile(e)'/><br>
+Tree File: <input type="file" id="tree-file"/><br>
+Teams File: <input type="file" id="teams-file"/><br>
 <button onclick="init()">Launch!</button>
 <div id="teams"></div>
 <center><div class="network" style="border: solid; border-color: firebrick; margin-top: 5vh; margin-bottom: 5vh; width: 80vw; height: 80vh;">Network</div></center>
-
+<script>
+    document.getElementById('tree-file').addEventListener('change', readTreeFile, false);
+    document.getElementById('teams-file').addEventListener('change', readTeamsFile, false);
+</script>
 </body>
 </html>
