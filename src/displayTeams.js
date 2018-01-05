@@ -29,7 +29,7 @@ function displayTeams(teams){
             "    <div class=\"MemberList\"></div>" +
             "    <br>";
         div.id = i;
-        console.log(div.innerHTML);
+        // console.log(div.innerHTML);
         document.getElementById("teams").appendChild(div);
         displayTeam(teams[i], i);
     }
@@ -64,7 +64,7 @@ function displayTeam(team, id){
     });
 
     teamContainer.getElementsByClassName("PublicationInProgress")[0].innerHTML = "Publication in progress: ";
-    if (!team.discoveriesToWrite.isEmpty())
+    if (!team.discoveriesToWrite.length == 0)
         teamContainer.getElementsByClassName("PublicationInProgress")[0].innerHTML += team.discoveriesToWrite.peek().nodeID;
 
     teamContainer.getElementsByClassName("TeamPublications")[0].innerHTML = "Team publications: ";
@@ -141,7 +141,7 @@ function updateTeam(team, id) {
     });
 
     teamContainer.getElementsByClassName("PublicationInProgress")[0].innerHTML = "Publication in progress: ";
-    if (!team.discoveriesToWrite.isEmpty())
+    if (!team.discoveriesToWrite.length == 0)
         teamContainer.getElementsByClassName("PublicationInProgress")[0].innerHTML += team.discoveriesToWrite.peek().nodeID;
 
     teamContainer.getElementsByClassName("TeamPublications")[0].innerHTML = "Team publications: ";

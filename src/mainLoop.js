@@ -2,9 +2,10 @@ if (READFROMFILE===0) {
     var teams = generateTeams();
     var tree = new TechnologyTree();
     tree.createMainNode();
-    for (var i = 0; i < NODECOUNT; i++) {
+    for (var i = 0; i < NODECOUNT-1; i++) {
         tree.addNode();
     }
+    tree.normalize();
     treeJSON = JSON.stringify(tree.existingNodes);
     teamsJSON = JSON.stringify(teams);
     //ZAPISYWANIE DO PLIKU
@@ -22,9 +23,8 @@ var awaitingPapers = [];
 var dayNumber = 0;
 
 function day(){
-    //console.clear();
+    console.clear();
     console.log("Day: " + String(dayNumber++));
-    console.log("Awaiting papers: " + String(awaitingPapers));
     for (var i = 0; i<awaitingPapers.length; i++){
         if(awaitingPapers[i].discovery.nodeID === 0) {
             console.log("EUREKA!");
@@ -50,8 +50,8 @@ function day(){
     for (var i = 0; i<teams.length; i++) {
         teams[i].doWork();
     }
-    console.log(publicationsInProgress);
-    console.log(publicationsFinished);
+    // console.log(publicationsInProgress);
+    // console.log(publicationsFinished);
     displayKnowledge(teams);
     updateTeams(teams);
     setTimeout(day, DAYLENGTH);

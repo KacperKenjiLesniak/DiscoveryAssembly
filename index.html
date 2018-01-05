@@ -5,12 +5,14 @@
     <title>DiscoveryAssembly</title>
     <script type="text/javascript" src="src/params.js"></script>
     <script type="text/javascript" src="src/Queue.js"></script>
+    <script type="text/javascript" src="src/priority-queue.min.js"></script>
     <script type="text/javascript" src="node_modules/vis/dist/vis.js"></script>
     <script type="text/javascript" src="src/technologyTree.js"></script>
     <script type="text/javascript" src="src/displayTechnologyTree.js"></script>
     <script type="text/javascript" src="src/scientists.js"></script>
     <script type="text/javascript" src="src/displayTeams.js"></script>
     <script type="text/javascript">
+        var queue = new PriorityQueue({ comparator: function(a, b) { return b - a; }});
         var nodeSet, edgeSet;
         function init() {
             var visGraph = new GraphToVis(tree);

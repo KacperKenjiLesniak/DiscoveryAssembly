@@ -25,9 +25,20 @@ function Team(teamID) {
     this.writtenPapers = [];
     this.knowledge = [];
     this.currentDiscovery = null;
-    this.meetingProbability = Math.floor(Math.random() * MEETINGPROBABILITY*100)/100;
+    this.meetingProbability = Math.floor(Math.random() * MEETINGPROBABILITY * 100) / 100;
     this.publicationInProgress = false;
-    this.discoveriesToWrite = new Queue();
+    // this.discoveriesToWrite = new Queue();
+    this.currentlyWrittenDiscovery = null;
+    this.discoveriesToWrite = new PriorityQueue({
+        comparator: function (a, b) {
+            var aSum = a.knowledgeFields.reduce(add, 0);
+            var bSum = b.knowledgeFields.reduce(add, 0);
+            return bSum - aSum;
+            function add(a, b) {
+                return a + b;
+            }
+        }
+    })
     this.meetingCount = 0;
     this.addMember = function (member) {
         member.team = teamID;
@@ -86,7 +97,7 @@ function Team(teamID) {
         }
         else {
             for (var i = 0; i < this.members.length; i++) {
-                if (choiceList[i] === 2){
+                if (choiceList[i] === 2) {
                     this.paperProgress -= this.members[i].paperWritingSpeed;
                 }
                 else {
@@ -97,8 +108,8 @@ function Team(teamID) {
         if (this.currentDiscovery !== null && this.completionStatus()) {
             this.discoveries.add(this.currentDiscovery);
             this.teamDiscoveries.push(this.currentDiscovery);
-            if(nodeSet.get(this.currentDiscovery.nodeID).color.background === 'pink') {
-                nodeSet.update([{id: this.currentDiscovery.nodeID, color:{background: '#ffcc00'}}]);
+            if (nodeSet.get(this.currentDiscovery.nodeID).color.background === 'pink') {
+                nodeSet.update([{ id: this.currentDiscovery.nodeID, color: { background: '#ffcc00' } }]);
             }
             for (var i = 0; i < this.knowledge.length; i++) {
                 this.knowledge[i] = 0;
@@ -106,23 +117,27 @@ function Team(teamID) {
                     this.members[j].knowledge[i] = 0;
                 }
             }
-            this.discoveriesToWrite.enqueue(this.currentDiscovery);
+            this.discoveriesToWrite.queue(this.currentDiscovery);
             this.currentDiscovery = null;
         }
-        if(this.discoveriesToWrite.getLength()>0 && !this.publicationInProgress){
-            publicationsInProgress.push(this.discoveriesToWrite.peek());
+        if (this.discoveriesToWrite.length > 0 && !this.publicationInProgress) {
+            this.currentlyWrittenDiscovery = this.discoveriesToWrite.dequeue();
+            publicationsInProgress.push(this.currentlyWrittenDiscovery);
             this.publicationInProgress = true;
             this.paperProgress = 0;
-            for(var i=0; i<this.discoveriesToWrite.peek().knowledgeFields.length; i++){
-                this.paperProgress += this.discoveriesToWrite.peek().knowledgeFields[i];
+            for (var i = 0; i < this.currentlyWrittenDiscovery.knowledgeFields.length; i++) {
+                this.paperProgress += this.currentlyWrittenDiscovery.knowledgeFields[i];
             }
+            // alert(JSON.stringify(this.currentlyWrittenDiscovery));
         }
-        if(this.paperProgress <= 0 && this.publicationInProgress){
-            publicationsFinished.push(this.discoveriesToWrite.peek());
-            this.writtenPapers.push(this.discoveriesToWrite.peek());
-            awaitingPapers.push({discovery: this.discoveriesToWrite.dequeue(), delay: PUBLICATIONDELAY});
+        if (this.paperProgress <= 0 && this.publicationInProgress) {
+            publicationsFinished.push(this.currentlyWrittenDiscovery);
+            this.writtenPapers.push(this.currentlyWrittenDiscovery);
+            awaitingPapers.push({ discovery: this.currentlyWrittenDiscovery, delay: PUBLICATIONDELAY });
+            this.currentlyWrittenDiscovery = null;
             this.publicationInProgress = false;
         }
+        // console.log("Discoveries to write: " + JSON.stringify(this.discoveriesToWrite));
     }
 }
 
@@ -149,14 +164,14 @@ function generateScientist() {
 
 
 function displayKnowledge(teams) {
-    // for (var i = 0; i < teams.length; i++) {
-    //     console.log("Team ID: " + teams[i].teamID);
-    //     console.log("Team knowledge: " + teams[i].knowledge);
-    //     if(teams[i].currentDiscovery != null)
-    //         console.log("Current discovery: " + teams[i].currentDiscovery.nodeID);
-    //     console.log("Team discoveries:");
-    //     teams[i].discoveries.forEach(function(value) { console.log(value.nodeID) })
-    // }
+    for (var i = 0; i < teams.length; i++) {
+        console.log("Team ID: " + teams[i].teamID);
+        console.log("Team knowledge: " + teams[i].knowledge);
+        if (teams[i].currentDiscovery != null)
+            console.log("Current discovery: " + teams[i].currentDiscovery.nodeID);
+        console.log("Team discoveries:");
+        teams[i].discoveries.forEach(function (value) { console.log(value.nodeID) })
+    }
 }
 
 function nextDiscoveryWith(team, tree) {
@@ -175,15 +190,16 @@ function nextDiscoveryWith(team, tree) {
                     }
                 }
                 if (ingredientsDiscovered / tree.existingNodes[i].ingredients.length >= INGREDIENTSTOPROCEED) {
-                    for (var j = 0; j < (tree.existingNodes[i].ingredients.length+1)*(tree.existingNodes[i].ingredients.length+1); j++)
+                    for (var j = 0; j < (tree.existingNodes[i].ingredients.length + 1) * (tree.existingNodes[i].ingredients.length + 1); j++)
                         possibleNextDiscoveries.push(tree.existingNodes[i]);
                 }
             }
         }
     }
-    if(possibleNextDiscoveries.length === 0)
+    if (possibleNextDiscoveries.length === 0)
         return null;
     team.currentDiscovery = possibleNextDiscoveries[Math.floor(Math.random() * possibleNextDiscoveries.length)];
+    // console.log('Current Discovery: ' + JSON.stringify(team.currentDiscovery));
     return team.currentDiscovery.nodeID;
 }
 
