@@ -1,15 +1,28 @@
-var teams = generateTeams();
-var tree = new TechnologyTree();
-var awaitingPapers = [];
-tree.createMainNode();
-for (var i = 0; i < NODECOUNT; i++) {
-    tree.addNode();
+if (READFROMFILE===0) {
+    var teams = generateTeams();
+    var tree = new TechnologyTree();
+    tree.createMainNode();
+    for (var i = 0; i < NODECOUNT; i++) {
+        tree.addNode();
+    }
+    treeJSON = JSON.stringify(tree.existingNodes);
+    teamsJSON = JSON.stringify(teams);
+    //ZAPISYWANIE DO PLIKU
+    
 }
+else {
+    //WCZYTANIE Z PLIKu
+
+}
+
+
+var awaitingPapers = [];
+
 
 var dayNumber = 0;
 
 function day(){
-    console.clear();
+    //console.clear();
     console.log("Day: " + String(dayNumber++));
     console.log("Awaiting papers: " + String(awaitingPapers));
     for (var i = 0; i<awaitingPapers.length; i++){
