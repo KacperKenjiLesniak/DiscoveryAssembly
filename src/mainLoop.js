@@ -8,7 +8,7 @@ if (READFROMFILE===0) {
     treeJSON = JSON.stringify(tree.existingNodes);
     teamsJSON = JSON.stringify(teams);
     //ZAPISYWANIE DO PLIKU
-    
+
 }
 else {
     //WCZYTANIE Z PLIKu
