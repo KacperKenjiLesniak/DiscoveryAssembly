@@ -13,6 +13,26 @@
     <script type="text/javascript">
         var nodeSet, edgeSet;
         function init() {
+            treeFile = document.getElementById('tree-file').value;
+            teamsFile = document.getElementById('teams-file').value;
+            console.log(JSON.stringify(treeFile));
+            var teams, tree;
+            if (JSON.stringify(teamsFile) === ""){
+                teams = generateTeams();
+            }
+            else {
+                teams = JSON.parse(readSingleFile(treeFile));
+            }
+            if (JSON.stringify(treeFile) === "") {
+                tree = new TechnologyTree();
+                tree.createMainNode();
+                for (var i = 0; i < NODECOUNT; i++) {
+                    tree.addNode();
+                }
+            }
+            else {
+                tree = JSON.parse(readSingleFile(teamsFile));
+            }
             var visGraph = new GraphToVis(tree);
             nodeSet = new vis.DataSet(visGraph.nodes);
             edgeSet = new vis.DataSet(visGraph.edges);
@@ -34,7 +54,10 @@
     <link rel="stylesheet" type="text/css" href="css/template.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body onload="init()">
+<body>
+Tree File: <input type="file" id="tree-file" onchange='readSingleFile(e)'/><br>
+Teams File: <input type="file" id="teams-file" onchange='readSingleFile(e)'/><br>
+<button onclick="init()">Launch!</button>
 <div id="teams"></div>
 <center><div class="network" style="border: solid; border-color: firebrick; margin-top: 5vh; margin-bottom: 5vh; width: 80vw; height: 80vh;">Network</div></center>
 

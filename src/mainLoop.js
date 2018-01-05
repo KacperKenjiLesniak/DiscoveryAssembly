@@ -1,21 +1,3 @@
-if (READFROMFILE===0) {
-    var teams = generateTeams();
-    var tree = new TechnologyTree();
-    tree.createMainNode();
-    for (var i = 0; i < NODECOUNT; i++) {
-        tree.addNode();
-    }
-    treeJSON = JSON.stringify(tree.existingNodes);
-    teamsJSON = JSON.stringify(teams);
-    //ZAPISYWANIE DO PLIKU
-    
-}
-else {
-    //WCZYTANIE Z PLIKu
-
-}
-
-
 var awaitingPapers = [];
 
 
@@ -55,4 +37,35 @@ function day(){
     displayKnowledge(teams);
     updateTeams(teams);
     setTimeout(day, DAYLENGTH);
+}
+
+function download(data,filename) {
+    var file = new Blob([data], {type: "text/plain;charset=utf-8"});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+}
+
+function readSingleFile(e) {
+    var file = e.target.files[0];
+    if (!file) {
+        return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        return e.target.result;
+        //displayContents(contents);
+    };
+    reader.readAsText(file);
 }
