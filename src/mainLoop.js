@@ -4,7 +4,7 @@ var awaitingPapers = [];
 var dayNumber = 0;
 
 function day(){
-    //console.clear();
+    console.clear();
     console.log("Day: " + String(dayNumber++));
     console.log("Awaiting papers: " + String(awaitingPapers));
     for (var i = 0; i<awaitingPapers.length; i++){
@@ -34,7 +34,6 @@ function day(){
     }
     console.log(publicationsInProgress);
     console.log(publicationsFinished);
-    displayKnowledge(teams);
     updateTeams(teams);
     setTimeout(day, DAYLENGTH);
 }

@@ -9,22 +9,23 @@
     <script type="text/javascript" src="node_modules/vis/dist/vis.js"></script>
     <script type="text/javascript" src="src/technologyTree.js"></script>
     <script type="text/javascript" src="src/displayTechnologyTree.js"></script>
+    <script type="text/javascript" src="src/teamData.js"></script>
     <script type="text/javascript" src="src/scientists.js"></script>
     <script type="text/javascript" src="src/displayTeams.js"></script>
     <script type="text/javascript">
         var nodeSet, edgeSet,teams,tree;
         function init() {
-            treeFile = document.getElementById('tree-file');
-            teamsFile = document.getElementById('teams-file');
-            //console.log(bufferTree);
-            //console.log(bufferTeams);
+            var treeFile = document.getElementById('tree-file');
+            var teamsFile = document.getElementById('teams-file');
+
             if (teamsFile.value === ""){
-                teams = generateTeams();
+                var teamsData = generateTeamsData();
+                teams = generateTeams(teamsData);
                 console.log(teams);
-                download(JSON.stringify(teams),"teams.txt");
+                download(JSON.stringify(teamsData),"teamsData.txt");
             }
             else {
-                teams = JSON.parse(bufferTeams);
+                teams = generateTeams(JSON.parse(bufferTeams));
                 console.log(teams);//JSON.parse(readSingleFile(treeFile.files[0]));
             }
             if (treeFile.value === "") {
