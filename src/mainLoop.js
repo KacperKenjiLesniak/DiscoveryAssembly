@@ -1,22 +1,3 @@
-if (READFROMFILE===0) {
-    var teams = generateTeams();
-    var tree = new TechnologyTree();
-    tree.createMainNode();
-    for (var i = 0; i < NODECOUNT-1; i++) {
-        tree.addNode();
-    }
-    tree.normalize();
-    treeJSON = JSON.stringify(tree.existingNodes);
-    teamsJSON = JSON.stringify(teams);
-    //ZAPISYWANIE DO PLIKU
-    
-}
-else {
-    //WCZYTANIE Z PLIKu
-
-}
-
-
 var awaitingPapers = [];
 
 
@@ -50,9 +31,8 @@ function day(){
     for (var i = 0; i<teams.length; i++) {
         teams[i].doWork();
     }
-    // console.log(publicationsInProgress);
-    // console.log(publicationsFinished);
-    displayKnowledge(teams);
+    console.log(publicationsInProgress);
+    console.log(publicationsFinished);
     updateTeams(teams);
     setTimeout(day, DAYLENGTH);
 }

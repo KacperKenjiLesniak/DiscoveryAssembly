@@ -1,14 +1,14 @@
-function Scientist(skills, knowledgePassingSpeed, paperWritingSpeed) {
-    this.skills = skills;
-    this.knowledgePassingSpeed = knowledgePassingSpeed;
-    this.paperWritingSpeed = paperWritingSpeed;
+function Scientist(scientistData) {
+    this.skills = scientistData.skills;
+    this.knowledgePassingSpeed = scientistData.knowledgePassingSpeed;
+    this.paperWritingSpeed = scientistData.paperWritingSpeed;
     this.team = null;
     this.knowledge = [];
     for (var i = 0; i < KNOWLEDGEFIELDSCOUNT; i++) {
         this.knowledge.push(0.0);
     }
     this.doWork = function () {
-        for (var i = 0; i < skills.length; i++) {
+        for (var i = 0; i < this.skills.length; i++) {
             this.knowledge[i] += this.skills[i];
         }
     }
@@ -17,15 +17,19 @@ function Scientist(skills, knowledgePassingSpeed, paperWritingSpeed) {
 var publicationsInProgress = [];
 var publicationsFinished = [];
 
-function Team(teamID) {
-    this.teamID = teamID;
+function Team(teamData) {
+    this.teamID = teamData.teamID;
     this.members = [];
+    for (var i = 0; i < teamData.members.length; i++){
+        this.members.push(new Scientist(teamData.members[i]));
+        this.members[i].teamID = this.teamID;
+    }
     this.discoveries = new Set();
     this.teamDiscoveries = [];
     this.writtenPapers = [];
     this.knowledge = [];
     this.currentDiscovery = null;
-    this.meetingProbability = Math.floor(Math.random() * MEETINGPROBABILITY * 100) / 100;
+    this.meetingProbability = teamData.meetingProbability;
     this.publicationInProgress = false;
     // this.discoveriesToWrite = new Queue();
     this.currentlyWrittenDiscovery = null;
@@ -50,8 +54,8 @@ function Team(teamID) {
 
     this.completionStatus = function () {
         for (var j = 0; j < this.members.length; j++) {
+            var discoveryRequirementsMet = true;
             for (var i = 0; i < this.currentDiscovery.knowledgeFields.length; i++) {
-                var discoveryRequirementsMet = true;
                 if (this.knowledge[i] + this.members[j].knowledge[i] < this.currentDiscovery.knowledgeFields[i]) {
                     discoveryRequirementsMet = false;
                 }
@@ -141,37 +145,12 @@ function Team(teamID) {
     }
 }
 
-function generateTeams() {
+function generateTeams(teamsData) {
     var teams = [];
     for (var i = 0; i < TEAMCOUNT; i++) {
-        var team = new Team(i);
-        var k = Math.floor(Math.random() * SCIENTISTSPERTEAM) + 1;
-        for (var j = 0; j < k; j++) {
-            team.addMember(generateScientist());
-        }
-        teams.push(team);
+        teams.push(new Team(teamsData[i]));
     }
     return teams;
-}
-
-function generateScientist() {
-    var skills = [];
-    for (var i = 0; i < KNOWLEDGEFIELDSCOUNT; i++) {
-        skills.push(Math.round(Math.random() * KNOWLEDGESPEED * 100) / 100);
-    }
-    return new Scientist(skills, Math.round(Math.random() * COMMUNICATIONSPEED * 100) / 100, Math.round(Math.random() * PAPERSPEED * 100) / 100)
-}
-
-
-function displayKnowledge(teams) {
-    for (var i = 0; i < teams.length; i++) {
-        console.log("Team ID: " + teams[i].teamID);
-        console.log("Team knowledge: " + teams[i].knowledge);
-        if (teams[i].currentDiscovery != null)
-            console.log("Current discovery: " + teams[i].currentDiscovery.nodeID);
-        console.log("Team discoveries:");
-        teams[i].discoveries.forEach(function (value) { console.log(value.nodeID) })
-    }
 }
 
 function nextDiscoveryWith(team, tree) {
@@ -183,12 +162,12 @@ function nextDiscoveryWith(team, tree) {
             }
             else {
                 var ingredientsDiscovered = 0;
-                console.log(ingredientsDiscovered);
                 for (var j = 0; j < tree.existingNodes[i].ingredients.length; j++) {
-                    if (team.discoveries.has(tree.existingNodes[i].ingredients[j])) {
+                    if (team.discoveries.has(tree.existingNodes[tree.existingNodes[i].ingredients[j]])) {
                         ingredientsDiscovered++;
                     }
                 }
+                console.log(JSON.stringify(tree.existingNodes[i]) + " Ingredients discovered: " + ingredientsDiscovered);
                 if (ingredientsDiscovered / tree.existingNodes[i].ingredients.length >= INGREDIENTSTOPROCEED) {
                     for (var j = 0; j < (tree.existingNodes[i].ingredients.length + 1) * (tree.existingNodes[i].ingredients.length + 1); j++)
                         possibleNextDiscoveries.push(tree.existingNodes[i]);

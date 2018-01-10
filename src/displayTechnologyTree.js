@@ -5,7 +5,7 @@ function GraphToVis(tree) {
         this.nodes.push(nodeToVisNode(tree.existingNodes[i]));
         var currentNode = tree.existingNodes[i];
         for(var k = 0; k < currentNode.ingredients.length; k++) {
-            currentIngredient = currentNode.ingredients[k];
+            var currentIngredient = tree.existingNodes[currentNode.ingredients[k]];
             this.edges.push({from: String(currentIngredient.nodeID), to: String(currentNode.nodeID), arrows: "to"});
         }
     }

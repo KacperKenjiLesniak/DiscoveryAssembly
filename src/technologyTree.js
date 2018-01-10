@@ -10,7 +10,7 @@ function TechnologyNode() {
 function TechnologyTree() {
     this.existingNodes = [];
     this.createMainNode = function () {
-        node = new TechnologyNode();
+        var node = new TechnologyNode();
         var fields = [];
         for (var i = 0; i < KNOWLEDGEFIELDSCOUNT; i++) {
             fields.push(Math.round(Math.random() * 10));
@@ -18,15 +18,15 @@ function TechnologyTree() {
         node.createTechnologyNode(fields);
         this.existingNodes.push(node);
     };
-    this.addNode = function () {
-        node = new TechnologyNode();
+    this.addNode = function(){
+        var node = new TechnologyNode();
         var fields = [];
         for (var i = 0; i < KNOWLEDGEFIELDSCOUNT; i++) {
             fields.push(Math.round(Math.random() * 10));
         }
         node.createTechnologyNode(fields);
-        productNodeIndex = Math.floor(Math.random() * this.existingNodes.length);
-        this.existingNodes[productNodeIndex].ingredients.push(node);
+        var productNodeIndex = Math.floor(Math.random()*this.existingNodes.length);
+        this.existingNodes[productNodeIndex].ingredients.push(node.nodeID);
         this.existingNodes.push(node);
     }
     this.normalize = function () {
@@ -36,7 +36,7 @@ function TechnologyTree() {
                 var fields = new Array(KNOWLEDGEFIELDSCOUNT);
                 for (var j = 0; j < KNOWLEDGEFIELDSCOUNT; j++) {
                     fields[j] = 0;
-                }           
+                }
                 for (var j = 0; j < currentNode.ingredients.length; j++) {
                     var currentAncestor = currentNode.ingredients[j];
                     for (var k = 0; k < KNOWLEDGEFIELDSCOUNT; k++) {
