@@ -38,7 +38,7 @@ function TechnologyTree() {
                     fields[j] = 0;
                 }
                 for (var j = 0; j < currentNode.ingredients.length; j++) {
-                    var currentAncestor = currentNode.ingredients[j];
+                    var currentAncestor = this.existingNodes[currentNode.ingredients[j]];
                     for (var k = 0; k < KNOWLEDGEFIELDSCOUNT; k++) {
                         fields[k] = Math.max(fields[k], currentAncestor.knowledgeFields[k]);
                         // console.log(currentAncestor.nodeID + " -> " + currentNode.nodeID + ": " + fields[k]);

@@ -36,6 +36,7 @@
                 for (var i = 0; i < NODECOUNT; i++) {
                     tree.addNode();
                 }
+                tree.normalize();
                 console.log(tree);
                 download(JSON.stringify(tree),"tree.txt");
             }
