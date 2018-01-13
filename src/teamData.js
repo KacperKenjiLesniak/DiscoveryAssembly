@@ -1,4 +1,3 @@
-
 function TeamData(teamID) {
     this.teamID = teamID;
     this.members = [];

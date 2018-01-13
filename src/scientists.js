@@ -31,8 +31,10 @@ function Team(teamData) {
     this.currentDiscovery = null;
     this.meetingProbability = teamData.meetingProbability;
     this.publicationInProgress = false;
-    // this.discoveriesToWrite = new Queue();
     this.currentlyWrittenDiscovery = null;
+    // W kolejce priorytetowej trzymane są odkrycia, które mają być
+    // odkryte przez dany zespół
+    // Comparator zwraca węzeł, który posiada najwyższy dochód publikacji
     this.discoveriesToWrite = new PriorityQueue({
         comparator: function (a, b) {
             var aSum = a.knowledgeFields.reduce(add, 0);
@@ -153,24 +155,24 @@ function generateTeams(teamsData) {
     return teams;
 }
 
-function nextDiscoveryWith(team, tree) {
+function nextDiscoveryWith(team, graph) {
     var possibleNextDiscoveries = [];
-    for (var i = 0; i < tree.existingNodes.length; i++) {
-        if (!team.discoveries.has(tree.existingNodes[i])) {
-            if (tree.existingNodes[i].ingredients.length === 0) {
-                possibleNextDiscoveries.push(tree.existingNodes[i]);
+    for (var i = 0; i < graph.existingNodes.length; i++) {
+        if (!team.discoveries.has(graph.existingNodes[i])) {
+            if (graph.existingNodes[i].ingredients.length === 0) {
+                possibleNextDiscoveries.push(graph.existingNodes[i]);
             }
             else {
                 var ingredientsDiscovered = 0;
-                for (var j = 0; j < tree.existingNodes[i].ingredients.length; j++) {
-                    if (team.discoveries.has(tree.existingNodes[tree.existingNodes[i].ingredients[j]])) {
+                for (var j = 0; j < graph.existingNodes[i].ingredients.length; j++) {
+                    if (team.discoveries.has(graph.existingNodes[graph.existingNodes[i].ingredients[j]])) {
                         ingredientsDiscovered++;
                     }
                 }
-                console.log(JSON.stringify(tree.existingNodes[i]) + " Ingredients discovered: " + ingredientsDiscovered);
-                if (ingredientsDiscovered / tree.existingNodes[i].ingredients.length >= INGREDIENTSTOPROCEED) {
-                    for (var j = 0; j < (tree.existingNodes[i].ingredients.length + 1) * (tree.existingNodes[i].ingredients.length + 1); j++)
-                        possibleNextDiscoveries.push(tree.existingNodes[i]);
+                console.log(JSON.stringify(graph.existingNodes[i]) + " Ingredients discovered: " + ingredientsDiscovered);
+                if (ingredientsDiscovered / graph.existingNodes[i].ingredients.length >= INGREDIENTSTOPROCEED) {
+                    for (var j = 0; j < (graph.existingNodes[i].ingredients.length + 1) * (graph.existingNodes[i].ingredients.length + 1); j++)
+                        possibleNextDiscoveries.push(graph.existingNodes[i]);
                 }
             }
         }

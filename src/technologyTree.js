@@ -7,7 +7,7 @@ function TechnologyNode() {
         this.nodeID = nodeID++;
     };
 }
-function TechnologyTree() {
+function TechnologyGraph() {
     this.existingNodes = [];
     this.createMainNode = function () {
         var node = new TechnologyNode();
@@ -25,6 +25,7 @@ function TechnologyTree() {
             fields.push(Math.round(Math.random() * 10));
         }
         node.createTechnologyNode(fields);
+        // Dodawanie do losowych węzłów tego konkretnego węzła jako potomka
         var productNodeIndex = Math.floor(Math.random()*this.existingNodes.length);
         this.existingNodes[productNodeIndex].ingredients.push(node.nodeID);
         this.existingNodes.push(node);
@@ -41,7 +42,6 @@ function TechnologyTree() {
                     var currentAncestor = this.existingNodes[currentNode.ingredients[j]];
                     for (var k = 0; k < KNOWLEDGEFIELDSCOUNT; k++) {
                         fields[k] = Math.max(fields[k], currentAncestor.knowledgeFields[k]);
-                        // console.log(currentAncestor.nodeID + " -> " + currentNode.nodeID + ": " + fields[k]);
                     }
                 }
                 for (var j = 0; j < KNOWLEDGEFIELDSCOUNT; j++) {

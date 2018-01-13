@@ -1,5 +1,6 @@
 var bufferTree = "";
 var bufferTeams = "";
+
 function download(data,filename) {
     var file = new Blob([data], {type: "text/plain;charset=utf-8"});
     if (window.navigator.msSaveOrOpenBlob) // IE10+
