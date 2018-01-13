@@ -18,13 +18,12 @@ function day(){
             }
         }
     }
-    for (var i = 0; i<teams.length; i++) {
-        if (teams[i].currentDiscovery === null) {
-           nextDiscoveryWith(teams[i], graph);
-        }
-    }
+
     for (var i = 0; i<teams.length; i++) {
         teams[i].doWork();
+        if (teams[i].currentDiscovery === null) {
+            nextDiscoveryWith(teams[i], graph);
+        }
     }
     console.log(publicationsInProgress);
     console.log(publicationsFinished);
