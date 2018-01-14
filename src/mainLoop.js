@@ -8,6 +8,7 @@ function day(){
     for (var i = 0; i<awaitingPapers.length; i++){
         if(awaitingPapers[i].discovery.nodeID === 0) {
             console.log("EUREKA!");
+            window.alert("EUREKA!");
             return;
         }
         awaitingPapers[i].delay--;
@@ -20,10 +21,10 @@ function day(){
     }
 
     for (var i = 0; i<teams.length; i++) {
-        teams[i].doWork();
         if (teams[i].currentDiscovery === null) {
             nextDiscoveryWith(teams[i], graph);
         }
+        teams[i].doWork();
     }
     console.log(publicationsInProgress);
     console.log(publicationsFinished);
